@@ -1,0 +1,51 @@
+# Copyright (C) 2026 DPG Supply
+# Document Browser
+
+Module194283Name = Document Browser
+Module194283Desc = Attach files stored in Dolibarr (records, products, Documents, medias) to emails, as attachments or share links
+Permission19428301 = Attach files stored in Dolibarr to emails
+
+DocBrowserSetup = Document Browser setup
+DocBrowserSetupPage = Picked files are copied when they are added to an email, so the originals are never changed or deleted.
+DocBrowserMaxAttach = Maximum total size of attachments (MB)
+DocBrowserMaxAttachDesc = When the attachments of an email together go over this size, the largest files picked from Dolibarr are sent as share links instead. Files uploaded from the computer are always attached. 0 = always attach.
+DocBrowserResize = Resize attached images (longest side, pixels)
+DocBrowserResizeDesc = JPEG, PNG, GIF and WebP images larger than this are sent as a smaller copy. Share links always give the original. 0 = send originals.
+DocBrowserExpire = Remove share links after (days)
+DocBrowserExpireDesc = Share links this module created stop working this many days after the last email that included them. Links you share by hand are never removed. Needs the Scheduled jobs module. 0 = keep.
+DocBrowserLinksTitleSetting = Heading above share links
+DocBrowserLinksTitleSettingDesc = Shown above the list of links in the email. Empty = "%s".
+DocBrowserWhere = Where it appears
+DocBrowserWhereDesc = "Add from Dolibarr…" next to the Attach button of the Send by email form of every card, and in modules that use it (Convomail compose).
+DocBrowserCronExpireShares = Remove expired Document Browser share links
+DocBrowserCronExpireSharesHelp = Removes share links created by Document Browser that were last sent longer ago than set up
+
+DocBrowserAddFromDolibarr = Add from Dolibarr…
+DocBrowserTitle = Add files from Dolibarr
+DocBrowserTabLinked = Linked records
+DocBrowserTabProducts = Products
+DocBrowserTabDocuments = Documents
+DocBrowserTabSearch = Search
+DocBrowserDocuments = Documents
+DocBrowserMedias = Medias
+DocBrowserAdd = Add
+DocBrowserCancel = Cancel
+DocBrowserNoFiles = No files
+DocBrowserNoLinked = No linked record. Choose a third party or project on the form, or use the other tabs.
+DocBrowserSearchProducts = Product ref or label
+DocBrowserSearchFiles = File name
+DocBrowserSearchHelp = Searches the file index. A file copied straight onto the server is found once its Documents tab has been opened.
+DocBrowserLoading = Loading…
+DocBrowserRecent = Recent documents of the third party
+DocBrowserWillLink = – too large to attach, will be sent as a share link
+DocBrowserRemove = Remove
+DocBrowserError = The files could not be loaded.
+DocBrowserTypeMore = Type at least 2 characters
+DocBrowserNoAccess = You are not allowed to see these files.
+DocBrowserSelected = %s selected
+DocBrowserUp = Up
+DocBrowserFileRefused = This file is not available to you.
+DocBrowserCopyFailed = The file %s could not be copied.
+DocBrowserLinksTitle = Files:
+DocBrowserSentAsLinks = %s file(s) were added to the message as share links, because the attachments were too large to send.
+DocBrowserSomeLinksFailed = Some share links could not be created.
