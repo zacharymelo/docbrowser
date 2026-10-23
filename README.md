@@ -37,7 +37,7 @@ The originals are never changed or deleted: what goes into the email is a copy.
 
 ## Installation
 
-1. Download `module_docbrowser-<version>.zip` from the [releases](https://github.com/zacharymelo/doli-docbrowser/releases).
+1. Download `module_docbrowser-<version>.zip` from the [releases](https://github.com/zacharymelo/docbrowser/releases).
 2. Home → Setup → Modules → **Deploy/install external app/module**, upload the zip.
 3. Enable **Document Browser** (Electronic Content Management family).
 4. Give the right **Attach files stored in Dolibarr to emails** to the users or groups who need it (on by default for new users).
@@ -79,7 +79,7 @@ $html = DocBrowserService::linksBlock($links, true);
 
 ## Development
 
-The module is developed in [Convomail](https://github.com/zacharymelo/convomail)'s dev stack: check this repo out next to it (`~/doli-docbrowser` beside `~/convomail`), and its `docker-compose.yml` mounts `module/` as `custom/docbrowser` on http://localhost:8114.
+The module is developed in [Convomail](https://github.com/zacharymelo/convomail)'s dev stack: clone this repo as `doli-docbrowser` next to it (`git clone https://github.com/zacharymelo/docbrowser.git ~/doli-docbrowser` beside `~/convomail`), and its `docker-compose.yml` mounts `module/` as `custom/docbrowser` on http://localhost:8114.
 
 ```bash
 docker cp dev/fixtures.php convomail-dolibarr-1:/tmp/docbrowser_fixtures.php
