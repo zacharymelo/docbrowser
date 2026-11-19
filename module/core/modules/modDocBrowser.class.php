@@ -38,7 +38,7 @@ class modDocBrowser extends DolibarrModules
 
 		$this->name = preg_replace('/^mod/i', '', get_class($this));
 		$this->description = "Attach files stored in Dolibarr (records, products, Documents, medias) to emails, as attachments or share links";
-		$this->version = '0.1.1';
+		$this->version = '0.1.2';
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
 		$this->picto = 'folder-open';
 
