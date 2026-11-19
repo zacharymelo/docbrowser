@@ -2,7 +2,7 @@
 
 Attach files that are already stored in Dolibarr to emails: a proposal PDF, a project drawing, product photos, files of the Documents module. When the attachments of an email are too large together, the largest picked files are sent as share links instead.
 
-**Status:** version 0.1.0, tested on Dolibarr 23. Module ID 194283.
+**Status:** version 0.1.2, tested on Dolibarr 23 and on Dolibarr 25 (develop, 25.0.0-alpha). Module ID 194283.
 
 ## What it does
 

@@ -469,6 +469,10 @@ class DocBrowserService
 				}
 			}
 		}
+		// Per object check of document.php, from Dolibarr 24.0.3 (not in phan stubs yet): @phan-suppress-next-line PhanUndeclaredFunction
+		if (function_exists('checkUserAccessToDocumentObject') && !checkUserAccessToDocumentObject($user, $modulepart, $rel, 'read')) {
+			return false;
+		}
 		return true;
 	}
 
@@ -824,7 +828,9 @@ class DocBrowserService
 		$like = "'%".$this->db->escape($this->db->escapeforlike($term))."%'";
 		$sql = "SELECT f.filepath, f.filename, f.src_object_type, f.src_object_id FROM ".MAIN_DB_PREFIX."ecm_files as f";
 		$sql .= " WHERE f.entity = ".((int) $conf->entity)." AND f.filename LIKE ".$like;
-		$sql .= " ORDER BY f.date_c DESC";
+		// Dolibarr 25 renamed llx_ecm_files.date_c into date_creation (array(25, 0, -5) is 25.0.0-alpha, so pre-releases match too)
+		require_once DOL_DOCUMENT_ROOT.'/core/lib/admin.lib.php';
+		$sql .= " ORDER BY f.".(versioncompare(explode('.', DOL_VERSION), array(25, 0, -5)) >= 0 ? 'date_creation' : 'date_c')." DESC";
 		$sql .= $this->db->plimit(400);
 		$resql = $this->db->query($sql);
 		if (!$resql) {
