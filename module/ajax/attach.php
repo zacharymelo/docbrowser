@@ -35,7 +35,7 @@ if (!defined('NOREQUIREAJAX')) {
 }
 
 $res = 0;
-if (!$res && file_exists("../../main.inc.php")) {
+if (file_exists("../../main.inc.php")) {
 	$res = @include "../../main.inc.php";
 }
 if (!$res && file_exists("../../../main.inc.php")) {
@@ -48,6 +48,14 @@ if (!$res) {
 	http_response_code(500);
 	exit;
 }
+
+/**
+ * @var Conf $conf
+ * @var DoliDB $db
+ * @var Translate $langs
+ * @var User $user
+ */
+'@phan-var-force DoliDB $db';
 
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formmail.class.php';
 dol_include_once('/docbrowser/class/docbrowserservice.class.php');

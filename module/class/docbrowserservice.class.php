@@ -253,7 +253,7 @@ class DocBrowserService
 			$r = self::types()[$element]['restrict'];
 			$features = $r[0];
 			if ($element === 'product') {
-				$features = ((int) $object->type === Product::TYPE_SERVICE) ? 'service' : 'produit';
+				$features = ($object instanceof Product && (int) $object->type === Product::TYPE_SERVICE) ? 'service' : 'produit';
 			}
 			$this->access[$cachekey] = (restrictedArea($user, $features, $object->id, $r[1], $r[2], $r[3], 'rowid', 0, 1) > 0);
 		}
@@ -296,7 +296,7 @@ class DocBrowserService
 				$rel = ((int) $object->id).'/';
 				break;
 			case 'product':
-				$isservice = ((int) $object->type === Product::TYPE_SERVICE);
+				$isservice = ($object instanceof Product && (int) $object->type === Product::TYPE_SERVICE);
 				$modconf = (!$isservice || !isModEnabled('service')) && isModEnabled('product') ? $conf->product : $conf->service;
 				$mp = ($modconf === $conf->service) ? 'service' : 'produit';
 				$base = $root($modconf);
@@ -376,7 +376,7 @@ class DocBrowserService
 				return $label.' '.$object->getFullName($langs);
 			case 'project':
 			case 'product':
-				return $label.' '.$object->ref.' '.(string) ($element === 'project' ? $object->title : $object->label);
+				return $label.' '.$object->ref.' '.(string) ($object instanceof Project ? $object->title : ($object instanceof Product ? $object->label : ''));
 			default:
 				return $label.' '.$object->ref;
 		}
@@ -604,10 +604,11 @@ class DocBrowserService
 		if ($origin !== '' && $originid > 0 && ($o = $this->fetchRecord($origin, $originid)) && $this->canRead($origin, $o, $user)) {
 			$wanted[] = array($origin, $originid);
 			// The third party and project of the record, when the form did not name them
-			if (!$socid && !empty($o->socid)) {
+			if (!$socid && property_exists($o, 'socid') && !empty($o->socid)) {
+				// socid is checked: @phan-suppress-next-line PhanUndeclaredProperty
 				$socid = (int) $o->socid;
 			}
-			if ($origin === 'contact' && !$socid && !empty($o->fk_soc)) {
+			if ($origin === 'contact' && !$socid && $o instanceof Contact && !empty($o->fk_soc)) {
 				$socid = (int) $o->fk_soc;
 			}
 			if (!$projectid && !empty($o->fk_project)) {
@@ -920,8 +921,10 @@ class DocBrowserService
 		}
 		$name = dol_sanitizeFileName($file['name']);
 		$dest = $tmpdir.'/'.$name;
-		for ($i = 2; file_exists($dest); $i++) {
+		$i = 2;
+		while (file_exists($dest)) {
 			$dest = $tmpdir.'/'.pathinfo($name, PATHINFO_FILENAME).'-'.$i.(pathinfo($name, PATHINFO_EXTENSION) !== '' ? '.'.pathinfo($name, PATHINFO_EXTENSION) : '');
+			$i++;
 		}
 		if (!$this->writeResizedCopy($file['path'], $dest) && dol_copy($file['path'], $dest, '0', 1) < 0) {
 			$this->errors[] = 'Cannot copy '.$file['name'];
